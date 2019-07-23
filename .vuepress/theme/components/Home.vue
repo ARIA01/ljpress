@@ -49,7 +49,7 @@
         :key="i"
       >
         <figure>
-          <img :src="index.img" />
+          <img :src="getSrc(index.img)" />
         </figure>
         <aside>
           <p>{{ index.details }}</p>
@@ -84,6 +84,16 @@ export default {
       return {
         link: this.data.actionLink,
         text: this.data.actionText
+      }
+    }
+  },
+
+  methods: {
+    getSrc(src) {
+      if(/^http/.test(src)) {
+        return src
+      }else {
+        return this.$site.base + src
       }
     }
   }
@@ -173,6 +183,7 @@ export default {
 
   .footer
     padding 2.5rem
+    margin-top 1rem
     border-top 1px solid $borderColor
     text-align center
     color lighten($textColor, 25%)

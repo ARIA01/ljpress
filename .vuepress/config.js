@@ -1,4 +1,5 @@
 module.exports = {
+  base: '/ljpress/',
   title: '凝卓智能 | Linkjob',
   themeConfig: {
     search: false,
