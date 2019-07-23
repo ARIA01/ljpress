@@ -1,7 +1,10 @@
 <template>
   <div class="sidebar-button" @click="$emit('toggle-sidebar')">
-    <svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512">
-      <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z" class=""></path>
+    <svg t="1563760569571" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1101" width="20" height="20" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <style type="text/css"></style>
+      </defs>
+      <path d="M938.666667 490.666667H179.626667l261.973333-262.4-29.866667-29.866667L97.706667 512l314.026666 313.6 29.866667-29.866667-261.973333-262.4H938.666667z" p-id="1102"></path>
     </svg>
   </div>
 </template>

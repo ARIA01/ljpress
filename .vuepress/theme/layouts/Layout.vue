@@ -7,6 +7,7 @@
   >
     <Navbar
       v-if="shouldShowNavbar"
+      :isShowSidebarButton="isShowSidebarButton"
       @toggle-sidebar="toggleSidebar"
     />
 
@@ -29,6 +30,13 @@
       />
     </Sidebar>
 
+    <div
+      class="custom-layout"
+      v-if="$page.frontmatter.layout"
+    >
+      <component :is="$page.frontmatter.layout"/>
+    </div>
+
     <Home v-if="$page.frontmatter.home"/>
 
     <Page
@@ -48,6 +56,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import nprogress from 'nprogress'
 import Home from '@theme/components/Home.vue'
 import Navbar from '@theme/components/Navbar.vue'
 import Page from '@theme/components/Page.vue'
@@ -59,7 +69,8 @@ export default {
 
   data () {
     return {
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      isShowSidebarButton: false
     }
   },
 
@@ -113,7 +124,22 @@ export default {
   },
 
   mounted () {
+    window.addEventListener('scroll', this.onScroll)
+
+    // configure progress bar
+    nprogress.configure({ showSpinner: false })
+
+    this.$router.beforeEach((to, from, next) => {
+      this.isShowSidebarButton = /^\/\w+\/[\w.]+$/.test(to.path)
+      
+      if (to.path !== from.path && !Vue.component(to.name)) {
+        nprogress.start()
+      }
+      next()
+    })
+
     this.$router.afterEach(() => {
+      nprogress.done()
       this.isSidebarOpen = false
     })
   },

@@ -7,9 +7,9 @@
         :alt="data.heroAlt || 'hero'"
       >
 
-      <h1 v-if="data.heroText !== null" id="main-title">{{ data.heroText || $title || 'Hello' }}</h1>
+      <h1 v-if="data.heroText" id="main-title">{{ data.heroText || $title || 'Hello' }}</h1>
 
-      <p class="description">
+      <p class="description"  v-if="data.tagline">
         {{ data.tagline || $description || 'Welcome to your VuePress site' }}
       </p>
 
@@ -36,6 +36,26 @@
         <h2>{{ feature.title }}</h2>
         <p>{{ feature.details }}</p>
       </div>
+    </div>
+
+    <div
+      class="indexes"
+      v-if="data.indexes && data.indexes.length"
+    >
+      <router-link
+        class="index"
+        v-for="(index, i) in data.indexes"
+        :to="index.link"
+        :key="i"
+      >
+        <figure>
+          <img :src="index.img" />
+        </figure>
+        <aside>
+          <p>{{ index.details }}</p>
+          <span>{{ index.date }}</span>
+        </aside>
+      </router-link>
     </div>
 
     <Content class="theme-default-content custom"/>
@@ -125,6 +145,32 @@ export default {
       color lighten($textColor, 10%)
     p
       color lighten($textColor, 25%)
+
+
+  .index
+    display flex
+    color lighten($textColor, 20%)
+    padding-top 1rem
+    margin-top 1rem
+    border-top 1px solid $borderColor
+    figure
+      flex 0 0 100px
+      margin 0 1rem 0 0
+      width 100px
+      height 100px
+      overflow hidden
+      img
+        width 100%
+        height auto
+    aside
+      p
+        margin-top 0
+      span
+        color $accentColor
+  .index:first-child
+    border-top none
+
+
   .footer
     padding 2.5rem
     border-top 1px solid $borderColor
