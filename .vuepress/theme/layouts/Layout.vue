@@ -1,34 +1,12 @@
 <template>
   <div
     class="theme-container"
-    :class="pageClasses"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
     <Navbar
-      v-if="shouldShowNavbar"
       :isShowSidebarButton="isShowSidebarButton"
-      @toggle-sidebar="toggleSidebar"
     />
-
-    <div
-      class="sidebar-mask"
-      @click="toggleSidebar(false)"
-    ></div>
-
-    <Sidebar
-      :items="sidebarItems"
-      @toggle-sidebar="toggleSidebar"
-    >
-      <slot
-        name="sidebar-top"
-        slot="top"
-      />
-      <slot
-        name="sidebar-bottom"
-        slot="bottom"
-      />
-    </Sidebar>
 
     <div
       class="custom-layout"
@@ -61,46 +39,18 @@ import nprogress from 'nprogress'
 import Home from '@theme/components/Home.vue'
 import Navbar from '@theme/components/Navbar.vue'
 import Page from '@theme/components/Page.vue'
-import Sidebar from '@theme/components/Sidebar.vue'
 import { resolveSidebarItems } from '../util'
 
 export default {
-  components: { Home, Page, Sidebar, Navbar },
+  components: { Home, Page, Navbar },
 
   data () {
     return {
-      isSidebarOpen: false,
       isShowSidebarButton: false
     }
   },
 
   computed: {
-    shouldShowNavbar () {
-      const { themeConfig } = this.$site
-      const { frontmatter } = this.$page
-      if (
-        frontmatter.navbar === false
-        || themeConfig.navbar === false) {
-        return false
-      }
-      return (
-        this.$title
-        || themeConfig.logo
-        || themeConfig.repo
-        || themeConfig.nav
-        || this.$themeLocaleConfig.nav
-      )
-    },
-
-    shouldShowSidebar () {
-      const { frontmatter } = this.$page
-      return (
-        !frontmatter.home
-        && frontmatter.sidebar !== false
-        && this.sidebarItems.length
-      )
-    },
-
     sidebarItems () {
       return resolveSidebarItems(
         this.$page,
@@ -108,18 +58,6 @@ export default {
         this.$site,
         this.$localePath
       )
-    },
-
-    pageClasses () {
-      const userPageClass = this.$page.frontmatter.pageClass
-      return [
-        {
-          'no-navbar': !this.shouldShowNavbar,
-          'sidebar-open': this.isSidebarOpen,
-          'no-sidebar': !this.shouldShowSidebar
-        },
-        userPageClass
-      ]
     }
   },
 
@@ -140,15 +78,10 @@ export default {
 
     this.$router.afterEach(() => {
       nprogress.done()
-      this.isSidebarOpen = false
     })
   },
 
   methods: {
-    toggleSidebar (to) {
-      this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
-    },
-
     // side swipe
     onTouchStart (e) {
       this.touchStart = {

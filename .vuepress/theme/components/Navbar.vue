@@ -99,11 +99,10 @@ $navbar-horizontal-padding = 2.5rem
     color $textColor
     position relative
   .links
-    padding-left 1.5rem
     box-sizing border-box
     background-color white
     white-space nowrap
-    font-size 0.9rem
+    font-size 1.0rem
     position absolute
     text-align center
     left $navbar-horizontal-padding
